@@ -6,5 +6,8 @@
 *.ez
 chat-*.tar
 erl_crash.dump
-/assets/node_modules
+/assets/node_modules/
 npm-debug.log
+/priv/static/
+/test/
+/tmp/
