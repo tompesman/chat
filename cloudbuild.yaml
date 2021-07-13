@@ -24,12 +24,12 @@
 # provided Docker build step. The arguments are passed to the docker CLI.
 steps:
 - name: "gcr.io/cloud-builders/docker"
-  args: ["build", "-t", "eu.gcr.io/$PROJECT_ID/chat:$_TAG",
+  args: ["build", "-t", "eu.gcr.io/$PROJECT_ID/chat:$TAG_NAME",
          "--build-arg", "project_id=$PROJECT_ID", "."]
 
 # Upload the built image to Google Container Registry
 images:
-- "eu.gcr.io/$PROJECT_ID/chat:$_TAG"
+- "eu.gcr.io/$PROJECT_ID/chat:$TAG_NAME"
 
 # Specify a default value for the _TAG substitution.
 # substitutions:
