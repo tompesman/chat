@@ -36,7 +36,15 @@ FROM alpine AS app
 
 # RUN apk add --no-cache openssl ncurses-libs
 RUN apk upgrade --no-cache && \
-    apk add --no-cache bash openssl libgcc libstdc++ ncurses-libs
+    apk add --no-cache bash openssl libgcc libstdc++ ncurses-libs ca-certificates openssl-dev \
+    && mkdir -p /usr/local/bin \
+    && wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 \
+        -O /usr/local/bin/cloud_sql_proxy \
+    && chmod +x /usr/local/bin/cloud_sql_proxy \
+    && mkdir -p /tmp/cloudsql
+
+ENV PORT=8080 GCLOUD_PROJECT_ID=${project_id} REPLACE_OS_VARS=true
+EXPOSE ${PORT}
 
 WORKDIR /app
 
@@ -48,4 +56,5 @@ COPY --from=build --chown=nobody:nobody /app/_build/prod/rel/chat ./
 
 ENV HOME=/app
 
-CMD ["bin/chat", "start"]
+CMD (/usr/local/bin/cloud_sql_proxy -projects=${GCLOUD_PROJECT_ID} -dir=/tmp/cloudsql &); \
+    exec /bin/chat start
