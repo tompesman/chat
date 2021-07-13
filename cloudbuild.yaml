@@ -23,7 +23,7 @@
 # This build script has only one step, a docker build, using Cloud Build's
 # provided Docker build step. The arguments are passed to the docker CLI.
 steps:
-- name: "eu.gcr.io/cloud-builders/docker"
+- name: "gcr.io/cloud-builders/docker"
   args: ["build", "-t", "eu.gcr.io/$PROJECT_ID/chat:$_TAG",
          "--build-arg", "project_id=$PROJECT_ID", "."]
 
