@@ -4,17 +4,24 @@
 # remember to add this file to your .gitignore.
 import Config
 
-database_url =
-  System.get_env("DATABASE_URL") ||
-    raise """
-    environment variable DATABASE_URL is missing.
-    For example: ecto://USER:PASS@HOST/DATABASE
-    """
+# database_url =
+#   System.get_env("DATABASE_URL") ||
+#     raise """
+#     environment variable DATABASE_URL is missing.
+#     For example: ecto://USER:PASS@HOST/DATABASE
+#     """
+
+# config :chat, Chat.Repo,
+#   # ssl: true,
+#   url: database_url,
+#   pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
 
 config :chat, Chat.Repo,
-  # ssl: true,
-  url: database_url,
-  pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
+  username: "postgres",
+  password: System.get_env("DATABASE_PASSWORD"),
+  database: "chat_prod",
+  socket_dir: "/tmp/cloudsql/chat-319618:europe-west4:db",
+  pool_size: 15
 
 secret_key_base =
   System.get_env("SECRET_KEY_BASE") ||
