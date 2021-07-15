@@ -57,4 +57,4 @@ COPY --from=build --chown=nobody:nobody /app/_build/prod/rel/chat ./
 ENV HOME=/app
 
 CMD (/usr/local/bin/cloud_sql_proxy -projects=${GCLOUD_PROJECT_ID} -dir=/tmp/cloudsql &); \
-    exec /bin/chat start
+    exec bin/chat start
