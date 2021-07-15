@@ -16,9 +16,15 @@ import Config
 #   url: database_url,
 #   pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
 
+database_password =
+  System.get_env("DATABASE_PASSWORD") ||
+    raise """
+    environment variable DATABASE_PASSWORD is missing.
+    """
+
 config :chat, Chat.Repo,
   username: "postgres",
-  password: System.get_env("DATABASE_PASSWORD"),
+  password: database_password,
   database: "chat_prod",
   socket_dir: "/tmp/cloudsql/chat-319618:europe-west4:db",
   pool_size: 15
